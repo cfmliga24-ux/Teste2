@@ -1,7 +1,11 @@
+
+
 export enum MatchStatus {
   SCHEDULED = 'SCHEDULED',
   LIVE = 'LIVE',
   FINISHED = 'FINISHED',
+  POSTPONED = 'POSTPONED',
+  WALKOVER = 'WALKOVER',
 }
 
 export enum MatchEventType {
@@ -15,6 +19,19 @@ export enum MatchEventType {
   HALF_TIME = 'HALF_TIME',
   FULL_TIME = 'FULL_TIME',
   SUBSTITUTION = 'SUBSTITUTION',
+}
+
+export enum UserRole {
+  MEMBER = 'MEMBER',
+  ADMIN = 'ADMIN',
+}
+
+export interface User {
+  id: string;
+  username: string;
+  email: string;
+  password?: string; // Should be hashed in a real app
+  role: UserRole;
 }
 
 export interface Country {
@@ -64,17 +81,22 @@ export interface Team {
   manager?: string;
   logoUrl: string;
   stats: TeamSeasonStats;
+  keyPeople?: string;
+  cardImageUrl?: string;
+  cardGradient?: string;
+  colors?: string[];
 }
 
 export interface Player {
   id: string;
+  number: number;
   firstName: string;
   lastName: string;
   fullName: string;
   birthDate: string;
   heightCm?: number;
   nationality: string;
-  position: 'Goleiro' | 'Defensor' | 'Meia' | 'Atacante';
+  position: 'Atacante' | 'Ponta-D' | 'Ponta-E' | 'Meia-Ofensivo' | 'Meio-Camista' | 'Lateral-D' | 'Lateral-E' | 'Volante' | 'Zagueiro' | 'Goleiro' | 'Treinador';
   teamId: string;
   photoUrl?: string;
   ratings: PlayerRatings;
@@ -98,9 +120,11 @@ export interface PlayerSeasonStats {
   yellowCards: number;
   redCards: number;
   mvpMatches: number;
+  mvpRounds?: number;
   golsDuplos: number;
   tackles: number;
   saves: number;
+  dribbles?: number;
 }
 
 export interface MatchEvent {
@@ -110,6 +134,27 @@ export interface MatchEvent {
   teamId: string;
   playerName?: string;
   description?: string;
+}
+
+export interface MatchStatsData {
+  posseDeBola: { home: number; away: number };
+  precisaoChutes: { home: number; away: number };
+  precisaoPasse: { home: number; away: number };
+  finalizacoesGol: { home: number; away: number }; // chutes a gol
+  passes: { home: number; away: number };
+  defesas: { home: number; away: number };
+  intercepcoes: { home: number; away: number };
+  impedimentos: { home: number; away: number };
+  faltas: { home: number; away: number };
+  cartoesAmarelos: { home: number; away: number };
+  cartoesVermelhos: { home: number; away: number };
+  golsShootout: { home: number; away: number };
+  golDePenalti: { home: number; away: number };
+  golsDuplos: { home: number; away: number };
+  xGols: { home: number; away: number };
+  totalChutes: { home: number; away: number };
+  chutesNaTrave: { home: number; away: number };
+  escanteios: { home: number; away: number };
 }
 
 export interface Match {
@@ -128,6 +173,18 @@ export interface Match {
   penaltiesHome?: number;
   penaltiesAway?: number;
   events: MatchEvent[];
+  stats?: MatchStatsData;
+  mvpPlayerId?: string;
+  roundNumber?: number;
+  dateLabel?: string;
+  groupLetter?: string;
+  highlightsUrl?: string;
+  lineups?: {
+    homeCoach: string;
+    homePlayers: string[];
+    awayCoach: string;
+    awayPlayers: string[];
+  };
 }
 
 export interface Standing {
@@ -154,4 +211,7 @@ export interface LeagueData {
   players: Player[];
   matches: Match[];
   standings: Standing[];
+  standingsGroupA: Standing[];
+  standingsGroupB: Standing[];
+  users: User[];
 }

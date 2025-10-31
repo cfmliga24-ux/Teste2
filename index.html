@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kings League Pro</title>
+    <title>BRASILEIRÃO - FBF25</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,38 @@
         display: inline-block;
         white-space: nowrap;
       }
+
+      @keyframes slide-out-left {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(-20px); opacity: 0; }
+      }
+      @keyframes slide-in-from-right {
+        from { transform: translateX(20px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slide-out-right {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(20px); opacity: 0; }
+      }
+      @keyframes slide-in-from-left {
+        from { transform: translateX(-20px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+
+      .animate-slide-out-left { animation: slide-out-left 0.3s forwards; }
+      .animate-slide-in-from-right { animation: slide-in-from-right 0.3s forwards; }
+      .animate-slide-out-right { animation: slide-out-right 0.3s forwards; }
+      .animate-slide-in-from-left { animation: slide-in-from-left 0.3s forwards; }
+      
+      @keyframes stat-fade-in {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .stat-row {
+        animation: stat-fade-in 0.5s ease-out forwards;
+        opacity: 0;
+      }
+
     </style>
   <script type="importmap">
 {
@@ -32,12 +64,13 @@
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.4"
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.4",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0"
   }
 }
 </script>
 </head>
-  <body class="bg-black text-gray-200">
+  <body class="bg-neutral-950 text-gray-200">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
